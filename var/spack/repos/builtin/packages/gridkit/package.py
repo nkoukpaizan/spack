@@ -14,9 +14,9 @@ class Gridkit(CMakePackage):
 
     maintainers("nkoukpaizan", "pelesh")
 
-    version("develop", submodules=True, branch="develop")
+    version("develop", submodules=True, branch="nicholson/buildsystem")
 
     depends_on("cxx", type="build")
     depends_on("suite-sparse")
     depends_on("sundials@7:+klu~mpi")
-    depends_on("ipopt~mumps")
+    depends_on("ipopt+mumps~coinhsl")
