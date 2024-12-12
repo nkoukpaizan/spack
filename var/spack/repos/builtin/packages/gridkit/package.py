@@ -16,7 +16,27 @@ class Gridkit(CMakePackage):
 
     version("develop", submodules=True, branch="nicholson/buildsystem")
 
+    variant("ipopt", default=False, description="Enable/Disable Ipopt")
+    variant("klu", default=True, description="Enable/Disable KLU")
+    variant("sundials", default=True, description="Enable/Disable SUNDIALS")
+
+    conflicts("+klu", when="~sundials")
+
     depends_on("cxx", type="build")
-    depends_on("suite-sparse")
-    depends_on("sundials@7:+klu~mpi")
-    depends_on("ipopt+mumps~coinhsl ^mumps~mpi")
+    depends_on("ipopt~mumps+coinhsl", when="+ipopt")
+    depends_on("sundials@7:+klu~mpi", when="+sundials+klu")
+    depends_on("sundials@7:~klu~mpi", when="+sundials~klu")
+
+    def cmake_args(self):
+        args = []
+        spec = self.spec
+
+        args.extend(
+            [
+                self.define_from_variant("GRIDKIT_ENABLE_IPOPT", "ipopt"),
+                self.define_from_variant("GRIDKIT_ENABLE_SUNDIALS", "sundials"),
+                self.define_from_variant("GRIDKIT_ENABLE_SUNDIALS_SPARSE", "klu"),
+            ]
+        )
+
+        return args
