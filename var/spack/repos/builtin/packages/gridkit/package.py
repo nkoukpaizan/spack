@@ -16,6 +16,7 @@ class Gridkit(CMakePackage):
 
     version("develop", submodules=True, branch="nicholson/buildsystem")
 
+    variant("enzyme", default=False, description="Enable/Disable Enzyme")
     variant("ipopt", default=False, description="Enable/Disable Ipopt")
     variant("klu", default=True, description="Enable/Disable KLU")
     variant("sundials", default=True, description="Enable/Disable SUNDIALS")
@@ -23,6 +24,7 @@ class Gridkit(CMakePackage):
     conflicts("+klu", when="~sundials")
 
     depends_on("cxx", type="build")
+    depends_on("enzyme", when="+enzyme")
     depends_on("ipopt~mumps+coinhsl", when="+ipopt")
     depends_on("sundials@7:+klu~mpi", when="+sundials+klu")
     depends_on("sundials@7:~klu~mpi", when="+sundials~klu")
@@ -36,6 +38,7 @@ class Gridkit(CMakePackage):
                 self.define_from_variant("GRIDKIT_ENABLE_IPOPT", "ipopt"),
                 self.define_from_variant("GRIDKIT_ENABLE_SUNDIALS", "sundials"),
                 self.define_from_variant("GRIDKIT_ENABLE_SUNDIALS_SPARSE", "klu"),
+                self.define_from_variant("GRIDKIT_ENABLE_ENZYME", "enzyme"),
             ]
         )
 
