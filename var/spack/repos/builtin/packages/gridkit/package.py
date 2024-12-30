@@ -29,6 +29,11 @@ class Gridkit(CMakePackage):
     depends_on("sundials@7:+klu~mpi", when="+sundials+klu")
     depends_on("sundials@7:~klu~mpi", when="+sundials~klu")
 
+    def setup_build_environment(self, env):
+        if self.spec.satisfies("+enzyme"):
+            env.set("CC", f"{self.spec['llvm'].prefix}/bin/clang")
+            env.set("CXX", f"{self.spec['llvm'].prefix}/bin/clang++")
+
     def cmake_args(self):
         args = []
         spec = self.spec
