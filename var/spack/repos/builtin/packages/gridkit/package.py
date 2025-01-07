@@ -14,7 +14,7 @@ class Gridkit(CMakePackage):
 
     maintainers("nkoukpaizan", "pelesh")
 
-    version("develop", submodules=True, branch="nicholson/enzyme-support")
+    version("develop", submodules=True, branch="develop")
 
     variant("enzyme", default=False, description="Enable/Disable Enzyme")
     variant("ipopt", default=False, description="Enable/Disable Ipopt")
