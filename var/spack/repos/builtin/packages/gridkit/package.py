@@ -23,6 +23,7 @@ class Gridkit(CMakePackage):
 
     conflicts("+klu", when="~sundials")
 
+    depends_on("c", type="build")
     depends_on("cxx", type="build")
     depends_on("enzyme", when="+enzyme")
     depends_on("ipopt~mumps+coinhsl", when="+ipopt")
