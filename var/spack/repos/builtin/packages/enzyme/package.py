@@ -38,6 +38,7 @@ class Enzyme(CMakePackage):
     depends_on("cxx", type="build")  # generated
     depends_on("fortran", type="build")  # generated
 
+    depends_on("llvm")
     #depends_on("llvm@7:12", when="@0.0.13:0.0.15")
     #depends_on("llvm@7:14", when="@0.0.32:0.0.47")
     #depends_on("llvm@7:14", when="@0.0.48:0.0.68")
