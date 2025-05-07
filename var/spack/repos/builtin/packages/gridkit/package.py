@@ -25,8 +25,8 @@ class Gridkit(CMakePackage):
 
     depends_on("c", type="build")
     depends_on("cxx", type="build")
+    depends_on("fortran", type="build")
     depends_on("enzyme", when="+enzyme")
-    depends_on("llvm", when="+enzyme")
     depends_on("ipopt~mumps+coinhsl", when="+ipopt")
     depends_on("sundials@7:+klu~mpi", when="+sundials+klu")
     depends_on("sundials@7:~klu~mpi", when="+sundials~klu")
