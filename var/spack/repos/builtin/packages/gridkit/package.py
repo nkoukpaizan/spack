@@ -20,6 +20,8 @@ class Gridkit(CMakePackage):
     variant("ipopt", default=False, description="Enable/Disable Ipopt")
     variant("klu", default=True, description="Enable/Disable KLU")
     variant("sundials", default=True, description="Enable/Disable SUNDIALS")
+    variant("asan", default=False, description="Enable/Disable address sanitizer")
+    variant("ubsan", default=False, description="Enable/Disable undefined behavir sanitizer")
 
     conflicts("+klu", when="~sundials")
 
@@ -41,6 +43,8 @@ class Gridkit(CMakePackage):
                 self.define_from_variant("GRIDKIT_ENABLE_SUNDIALS", "sundials"),
                 self.define_from_variant("GRIDKIT_ENABLE_SUNDIALS_SPARSE", "klu"),
                 self.define_from_variant("GRIDKIT_ENABLE_ENZYME", "enzyme"),
+                self.define_from_variant("GRIDKIT_ENABLE_ASAN", "asan"),
+                self.define_from_variant("GRIDKIT_ENABLE_UBSAN", "ubsan"),
             ]
         )
 
