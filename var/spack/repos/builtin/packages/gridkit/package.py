@@ -16,11 +16,11 @@ class Gridkit(CMakePackage):
 
     version("develop", submodules=True, branch="develop")
 
+    variant("asan", default=False, description="Enable/Disable address sanitizer")
     variant("enzyme", default=False, description="Enable/Disable Enzyme")
     variant("ipopt", default=False, description="Enable/Disable Ipopt")
     variant("klu", default=True, description="Enable/Disable KLU")
     variant("sundials", default=True, description="Enable/Disable SUNDIALS")
-    variant("asan", default=False, description="Enable/Disable address sanitizer")
     variant("ubsan", default=False, description="Enable/Disable undefined behavir sanitizer")
 
     conflicts("+klu", when="~sundials")
@@ -28,8 +28,9 @@ class Gridkit(CMakePackage):
     depends_on("c", type="build")
     depends_on("cxx", type="build")
     depends_on("fortran", type="build")
+
     depends_on("enzyme", when="+enzyme")
-    depends_on("ipopt~mumps+coinhsl", when="+ipopt")
+    depends_on("ipopt", when="+ipopt")
     depends_on("sundials@7:+klu~mpi", when="+sundials+klu")
     depends_on("sundials@7:~klu~mpi", when="+sundials~klu")
 
