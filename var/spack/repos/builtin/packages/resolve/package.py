@@ -25,6 +25,7 @@ class Resolve(CMakePackage, CudaPackage, ROCmPackage):
 
     depends_on("cxx", type="build")  # generated
 
+    variant("asan", default=False, description="Enable/Disable address sanitizer")
     variant("klu", default=True, description="Use KLU, AMD and COLAMD Libraries from SuiteSparse")
     variant(
         "lusol",
@@ -32,6 +33,7 @@ class Resolve(CMakePackage, CudaPackage, ROCmPackage):
         when="@develop:",
         description="Build the LUSOL Library. Requires fortran",
     )
+    variant("ubsan", default=False, description="Enable/Disable undefined behavir sanitizer")
 
     depends_on("suite-sparse", when="+klu")
 
@@ -56,6 +58,8 @@ class Resolve(CMakePackage, CudaPackage, ROCmPackage):
                 self.define_from_variant("RESOLVE_USE_KLU", "klu"),
                 self.define_from_variant("RESOLVE_USE_LUSOL", "lusol"),
                 self.define("RESOLVE_TEST_WITH_BSUB", False),
+                self.define_from_variant("RESOLVE_USE_ASAN", "asan"),
+                self.define_from_variant("RESOLVE_USE_UBSAN", "ubsan"),
             ]
         )
 
